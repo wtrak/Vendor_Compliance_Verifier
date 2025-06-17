@@ -34,4 +34,35 @@ document.getElementById('scannerForm').addEventListener('submit', async (e) => {
       if (html.includes("gdpr") || html.includes("ccpa")) {
         addResult("Mentions GDPR or CCPA", "good");
       } else {
-        addResult("No mention of GDPR or CCPA on homepage", "bad")
+        addResult("No mention of GDPR or CCPA on homepage", "bad");
+      }
+
+      if (html.includes("cookie")) {
+        addResult("Mentions cookies", "good");
+      } else {
+        addResult("No mention of cookie use", "warn");
+      }
+
+      const scripts = [...doc.scripts].map(s => s.src).join(" ");
+      if (/googletagmanager|facebook|hotjar|mixpanel/i.test(scripts)) {
+        addResult("Tracking scripts detected (Google/Facebook/Hotjar/etc)", "bad");
+      } else {
+        addResult("No major tracking scripts detected", "good");
+      }
+
+    } catch {
+      addResult("Unable to scan site content (cross-origin restrictions)", "warn");
+    }
+
+    iframe.remove();
+  };
+
+  document.body.appendChild(iframe);
+});
+
+function addResult(text, type = "warn") {
+  const li = document.createElement('li');
+  li.className = type;
+  li.textContent = text;
+  document.getElementById('resultList').appendChild(li);
+}
