@@ -1,0 +1,56 @@
+body {
+  font-family: sans-serif;
+  background: #f9fafb;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+}
+
+input[type="url"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #111827;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1f2937;
+}
+
+.hidden {
+  display: none;
+}
+
+li {
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+}
+
+li.good::before {
+  content: "✅ ";
+}
+li.warn::before {
+  content: "⚠️ ";
+}
+li.bad::before {
+  content: "❌ ";
+}
