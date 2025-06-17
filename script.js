@@ -26,7 +26,7 @@ document.getElementById('scannerForm').addEventListener('submit', async (e) => {
   iframe.style.display = 'none';
   iframe.src = url;
 
-  iframe.onload = () => {
+  iframe.onload = function () {
     try {
       const doc = iframe.contentDocument || iframe.contentWindow.document;
       const html = doc.body.innerText.toLowerCase();
@@ -50,7 +50,7 @@ document.getElementById('scannerForm').addEventListener('submit', async (e) => {
         addResult("No major tracking scripts detected", "good");
       }
 
-    } catch {
+    } catch (err) {
       addResult("Unable to scan site content (cross-origin restrictions)", "warn");
     }
 
