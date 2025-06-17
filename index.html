@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vendor Compliance Checker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Quiet Vendor Compliance Verifier</h1>
+    <p>Enter a vendor’s website and scan for basic GDPR/CCPA and cookie risks. No data is sent anywhere.</p>
+
+    <form id="scannerForm">
+      <input type="url" id="urlInput" placeholder="https://example.com" required />
+      <button type="submit">Scan</button>
+    </form>
+
+    <div id="results" class="hidden">
+      <h2>Scan Results</h2>
+      <ul id="resultList"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
