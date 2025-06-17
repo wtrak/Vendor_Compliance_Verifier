@@ -7,7 +7,8 @@ document.getElementById('scannerForm').addEventListener('submit', async (e) => {
   resultList.innerHTML = '';
   results.classList.remove('hidden');
 
-  // Basic checks
+  let blocking = false;
+
   addResult("Checking for privacy policy...", "warn");
 
   try {
@@ -19,9 +20,9 @@ document.getElementById('scannerForm').addEventListener('submit', async (e) => {
     }
   } catch {
     addResult("Unable to check /privacy page (CORS blocked)", "warn");
+    blocking = true;
   }
 
-  // Load iframe for client-side scan
   const iframe = document.createElement('iframe');
   iframe.style.display = 'none';
   iframe.src = url;
@@ -50,11 +51,16 @@ document.getElementById('scannerForm').addEventListener('submit', async (e) => {
         addResult("No major tracking scripts detected", "good");
       }
 
-    } catch (err) {
+    } catch {
       addResult("Unable to scan site content (cross-origin restrictions)", "warn");
+      blocking = true;
     }
 
     iframe.remove();
+
+    if (blocking) {
+      addResult("This vendor blocks scanning, which may indicate limited transparency.", "warn");
+    }
   };
 
   document.body.appendChild(iframe);
@@ -66,3 +72,4 @@ function addResult(text, type = "warn") {
   li.textContent = text;
   document.getElementById('resultList').appendChild(li);
 }
+
