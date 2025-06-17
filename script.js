@@ -12,17 +12,21 @@ document.getElementById('scannerForm').addEventListener('submit', async (e) => {
   addResult("Checking for privacy policy...", "warn");
 
   try {
-    const res = await fetch(url + '/privacy', { method: 'HEAD' });
-    if (res.ok) {
+    const proxyRes = await fetch(`/api/fetchPrivacy?targetUrl=${encodeURIComponent(url + '/privacy')}`);
+    const proxyJson = await proxyRes.json();
+
+    if (proxyRes.ok && proxyJson.ok) {
       addResult("Privacy policy found at /privacy", "good");
     } else {
-      addResult("No /privacy page found", "bad");
+      addResult("No /privacy page found or blocked", "bad");
+      blocking = true;
     }
   } catch {
-    addResult("Unable to check /privacy page (CORS blocked)", "warn");
+    addResult("Unable to check /privacy page (via proxy)", "warn");
     blocking = true;
   }
 
+  // Load iframe to scan visible content
   const iframe = document.createElement('iframe');
   iframe.style.display = 'none';
   iframe.src = url;
@@ -72,4 +76,5 @@ function addResult(text, type = "warn") {
   li.textContent = text;
   document.getElementById('resultList').appendChild(li);
 }
+
 
